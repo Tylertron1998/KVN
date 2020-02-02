@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KVN", "KVN\KVN.csproj", "{4BA1F210-8ECC-4E8B-BA53-09A482D4D3EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KVN.Tests", "KVN.Tests\KVN.Tests.csproj", "{005FA4AC-7961-429A-B0C1-C01AEB6B86A8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4BA1F210-8ECC-4E8B-BA53-09A482D4D3EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BA1F210-8ECC-4E8B-BA53-09A482D4D3EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BA1F210-8ECC-4E8B-BA53-09A482D4D3EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BA1F210-8ECC-4E8B-BA53-09A482D4D3EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{005FA4AC-7961-429A-B0C1-C01AEB6B86A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{005FA4AC-7961-429A-B0C1-C01AEB6B86A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{005FA4AC-7961-429A-B0C1-C01AEB6B86A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{005FA4AC-7961-429A-B0C1-C01AEB6B86A8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

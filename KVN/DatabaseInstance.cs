@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
+using KVN.Providers;
 
 namespace KVN
 {
@@ -8,44 +9,50 @@ namespace KVN
     {
         private Dictionary<string, T> _cache = new Dictionary<string, T>();
         private readonly DatabaseSettings _settings;
-
-        private bool _saveOnUpdate => _settings.ShouldSaveOnUpdate;
-        private string _fileName => _settings.FileName;
+        private bool SaveOnUpdate => _settings.ShouldSaveOnUpdate;
+        private string FileName => _settings.FileName;
+        private IDataProvider<T> _provider;
         
-        public DatabaseInstance(DatabaseSettings settings)
+        public DatabaseInstance(DatabaseSettings settings, IDataProvider<T> provider)
         {
             _settings = settings;
+            _provider = provider;
             Load();
         }
 
         public T this[long key]
         {
-            get => _cache[key.ToString()];
-            set => _cache[key.ToString()] = value;
-        }
-
-        private void Load()
-        {
-            var key = Utils.Locks.GetOrAdd(_fileName, _ => new object());
-            
-            lock (key)
-            {
-                using var stream = File.OpenRead(_fileName);
-                var buffer = new byte[stream.Length];
-                var bytes = stream.Read(buffer, 0, (int)stream.Length);
-                _cache = JsonSerializer.Deserialize<Dictionary<string, T>>(buffer, _settings.Options);
-            }
+            get => Get(key);
+            set => Set(key, value);
         }
         
         public void SaveChanges()
         {
-            var key = Utils.Locks.GetOrAdd(_fileName, _ => new object());
-            
+            _provider.SetData(FileName, _cache);
+        }
+        
+        private void Load()
+        {
+            _cache = _provider.GetData(FileName);
+        }
+
+        private void Set(long id, T value)
+        {
+            var key = Utils.Locks.GetOrAdd(FileName, _ => new object());
+
             lock (key)
             {
-                var bytes = JsonSerializer.SerializeToUtf8Bytes(_cache, _settings.Options);
-                using var stream = File.OpenWrite(_fileName);
-                stream.Write(bytes);
+                _cache[id.ToString()] = value;
+            }
+        }
+
+        private T Get(long id)
+        {
+            var key = Utils.Locks.GetOrAdd(FileName, _ => new object());
+
+            lock (key)
+            {
+                return _cache[id.ToString()];
             }
         }
     }

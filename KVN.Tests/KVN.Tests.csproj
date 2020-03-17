@@ -16,4 +16,10 @@
       <ProjectReference Include="..\KVN\KVN.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="foobar.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>
